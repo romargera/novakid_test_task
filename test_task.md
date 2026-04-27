@@ -53,7 +53,7 @@ Core idea: **make the child speak English before the parent completes the full f
 
 Proposed path:
 
-1. Parent clicks: **"Start a real English lesson shortly."**
+1. Parent clicks: **"Start your child's first English lesson."**
 2. Parent gives only email, phone number, age.
 3. Parent or child taps **Speak** and the child starts the existing trial lesson format immediately with a real teacher or AI teacher. A minimal line above the button explains that the mic is used for the live check.
 4. Parent handoff: QR / email magic link opens an authorized parent session on mobile and updates desktop status.
@@ -82,7 +82,7 @@ Target flow wireframe:
 
 ```mermaid
 flowchart TD
-  A["Landing<br/>Start a real English lesson shortly<br/>CTA: Start lesson"]
+  A["Landing<br/>Start your child's first English lesson<br/>CTA: Start lesson"]
   B["Minimal setup<br/>Email, phone, child age"]
   C["Instant lesson<br/>Small mic note above Speak<br/>Existing lesson format<br/>Real teacher or AI teacher"]
   D["Parent handoff<br/>QR or email magic link<br/>Mobile opens parent session<br/>Desktop status updates"]
@@ -117,7 +117,7 @@ Changes summary:
 
 **Details:**
 
-- Size standby teacher capacity before launch: available teacher minutes / average trial duration -> max instant lessons per day. If sample is too small, run in one market / timezone or extend the test window.
+- Size standby teacher capacity before launch: available teacher minutes / average trial duration -> max instant lessons per day. If expected delivered lessons are too low for a readable A/B, run a one-market / timezone pilot or extend the test window.
 - Add users to the A/B test only when teacher availability is high enough to fulfill immediate trial lessons.
 - Use the existing trial lesson format with real teachers. The experiment changes timing and entry point, not lesson content.
 - Desktop as primary decision cohort. Mobile is secondary.
@@ -128,7 +128,9 @@ Changes summary:
 
 **28-day Net Revenue per Parent Visitor** = net revenue from paid packages within 28 days / parent visitors assigned to the test, excluding bots and non-focus countries.
 
-For the 2-week decision, I would use leading indicators: instant lesson start/completion, package view, checkout start, 14-day paid conversion, and first-purchase ARPPU. The 28-day metric is the confirmation read for scale.
+**Fast decision metric:** share of visitors whose child starts and completes the first lesson within the target wait-time window.
+
+Set the target before launch from the current trial completion baseline and teacher-capacity sizing. I would use package view, checkout start, 14-day paid conversion, and first-purchase ARPPU as monetization checks; the 28-day metric is the confirmation read for scale.
 
 **Secondary metrics:**
 
@@ -139,19 +141,20 @@ For the 2-week decision, I would use leading indicators: instant lesson start/co
 - Mic/camera and lesson-room connection success rate.
 - Clean lesson completion rate = share of instant lessons completed without major technical issue or support complaint.
 - Paid conversion after delivered instant lesson = share of parents who buy after their child received an instant lesson within SLA.
+- Refund rate.
 
 **Other signals:**
 
 - Parent satisfaction and child engagement after the instant lesson.
 - Support contacts, complaints, refunds.
-- Lesson room technical errors and connection failures.
+- Technical issues.
 
 **Decision rules:**
 
-- **Scale / continue** if 14-day leading revenue and paid conversion are directionally better than control, quality guardrails hold, and 28-day revenue confirms the lift.
-- **Iterate** if delivered lessons convert better than control, but all-visitor revenue is flat because teacher availability or wait time is weak.
+- **Scale / continue** if the Fast decision metric hits the pre-set target, monetization checks are directionally better than control, quality guardrails hold, and 28-day revenue confirms the lift.
+- **Iterate** if instant lesson completion is strong, but all-visitor revenue is flat because teacher availability, wait time, or checkout performance is weak.
 - **Iterate** if revenue grows but average package value, refunds, complaints, or satisfaction worsen.
-- **Kill or radically rethink** if high-quality delivered instant lessons do not improve revenue per parent visitor or paid conversion versus the current delayed-trial path.
+- **Kill or radically rethink** if instant lesson completion misses badly despite adequate teacher supply / room connection, or if high-quality delivered lessons do not improve revenue per parent visitor or paid conversion versus the current delayed-trial path.
 
 **If the test fails, I would inspect:**
 
@@ -161,10 +164,8 @@ For the 2-week decision, I would use leading indicators: instant lesson start/co
 - **Monetization:** package view, checkout start, payment completion, first-purchase ARPPU.
 - **Attribution:** compare all test visitors vs parents who actually got the instant lesson, plus post-lesson communication timing.
 
-**Risks & mitigations:**
+**Incremental risks & mitigations:**
 
-- **Teacher is not available:** route the user to the current trial booking flow and track this as failed instant delivery, not as a product failure.
-- **Wait time creates anxiety:** cap the instant wait and fall back to normal booking if the SLA is missed.
-- **Mic/camera or room connection fails:** track permission grants, room load success, and connection failures as a critical funnel step.
-- **Lesson quality varies:** use the existing trial lesson format and monitor completion, satisfaction, technical issues, complaints, and refunds.
-- **Post-lesson communication changes the result:** keep follow-up close to current flow and track send / delivery / click timing as a guardrail.
+- **Less data for Sales / CRM:** some users will reach the lesson without completing the full questionnaire. Mitigation: collect only must-have fields upfront and move the rest to the parent flow during / after the lesson.
+- **Mic/camera or room connection fails:** parents have less time to test the setup before the lesson. Mitigation: show a quick device check before joining; if it fails, offer a mobile retry link or route to the current booking flow.
+- **Lesson quality varies:** faster starts may increase operational variance. Mitigation: use the existing trial lesson format and monitor completion, satisfaction, technical issues, complaints, and refunds.
